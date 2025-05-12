@@ -13,10 +13,9 @@ import java.util.Optional;
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Override
-    @Cacheable(cacheNames = "accounts", key = "#id")
-    Optional<Account> findById(Long id);
-
-    @Override
     @CacheEvict(cacheNames = "accounts", key = "#result.id")
     <S extends Account> S save(S entity);
+
+    @Cacheable(cacheNames = "accounts", key = "#id")
+    Optional<Account> findByUserId(Long userId);
 }
